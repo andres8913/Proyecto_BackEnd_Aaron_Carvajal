@@ -17,6 +17,8 @@ use App\Http\Controllers\Api\CustomerController;
 
 Route::get("/customers",[CustomerController::class,'read']);
 
+Route::post("/customer",[CustomerController::class,'create']);
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
