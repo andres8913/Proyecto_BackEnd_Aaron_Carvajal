@@ -37,13 +37,49 @@ class CustomerController extends Controller
         return response()->json($message);
     }
 
-    public function update(){
+    public function update(Request $request){
 
-        return true;
+        $numeroIdentificacionCustomer = $request->query("numeroIdentificacion");
+
+        $customer = new Customer();
+
+        $customerParticular = $customer->find($numeroIdentificacionCustomer);
+
+        $customerParticular->nombres = $request->input("nombres");
+        $customerParticular->apellidos = $request->input("apellidos");
+        $customerParticular->tipoIdentificacion = $request->input("tipoIdentificacion");
+        $customerParticular->telefono = $request->input("telefono");
+        $customerParticular->email = $request->input("email");
+        $customerParticular->profesion = $request->input("profesion");
+        $customerParticular->rol = $request->input("rol");
+        
+        $customerParticular->save();
+
+        $message=[
+            "message" => "Actualizacion Exitosa",
+            "Numero Identificacion" => $request->query("numeroIdentificacion"),
+            "Nombre" =>$customerParticular->nombres
+        ];
+
+        return $message;
     }
 
-    public function delete(){
+    public function delete(Request $request){
 
-        return true;
+        $numeroIdentificacionCustomer = $request->query("numeroIdentificacion");
+
+        $customer = new Customer();
+
+        $customerParticular = $customer->find($numeroIdentificacionCustomer);
+
+        $customerParticular->delete();
+
+        $message=[
+            "message" => "Eliminacion Exitosa",
+            "Numero Identificacion" => $request->query("numeroIdentificacion")
+        ];
+
+        return $message;        
+
     }
 }
